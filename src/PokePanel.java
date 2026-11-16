@@ -16,7 +16,7 @@ import javax.swing.*;
 
 public class PokePanel extends JPanel {
 
-	JTextArea display = new JTextArea(20, 60);
+	static JTextArea display = new JTextArea(20, 60);
 	CustomHashMap entries = new CustomHashMap(100);
 
 	public PokePanel() {
@@ -44,6 +44,14 @@ public class PokePanel extends JPanel {
 		buttons.add(makeButton("Get Pokemon", e->getPokemon()));
 		buttons.add(makeButton("Put Pokemon", e->putPokemon()));
 		this.add(buttons, BorderLayout.EAST);
+	}
+
+	public static JTextArea getDisplay() {
+		return display;
+	}
+
+	public CustomHashMap getEntries() {
+		return entries;
 	}
 
 	public JButton makeButton(String name, ActionListener action) {
@@ -82,11 +90,11 @@ public class PokePanel extends JPanel {
 			dataList.add(currentData.toString().trim());// adds the final one (since there is no comma at the end)
 
 			
-				PokemonKey p_k = new PokemonKey(Integer.parseInt(dataList.get(0)), Integer.parseInt(dataList.get(4)));
+				PokeKey p_k = new PokeKey(Integer.parseInt(dataList.get(0)), Integer.parseInt(dataList.get(4)));
 				Pokemon p = new Pokemon(dataList.get(1), Integer.parseInt(dataList.get(2)), dataList.get(3));
 				Entry e = new Entry(p_k, p);
 				entries.put(e);
-			
+				display.append(e.toString() +"\n");
 		}
 		display.append("Loading Complete!\n");
 	}
@@ -104,11 +112,11 @@ public class PokePanel extends JPanel {
 		
 		int result = JOptionPane.showConfirmDialog(null, panel, "Enter Pokemon Information to Get Pokemon:", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 		 if(result == JOptionPane.OK_OPTION) {//create a PokemonKey from their input
-			 PokemonKey p_k = null;
+			 PokeKey p_k = null;
 			 
 			 //try to parse input
 			 try {
-			  p_k = new PokemonKey(Integer.parseInt(p_id.getText()), Integer.parseInt(p_evo_set.getText()));
+			  p_k = new PokeKey(Integer.parseInt(p_id.getText()), Integer.parseInt(p_evo_set.getText()));
 			}catch (NumberFormatException ex) {
 				display.append("Invalid information. Please enter integers for both the Pokemon's ID and Evolution Set. \n");
 				return;
@@ -132,7 +140,7 @@ public class PokePanel extends JPanel {
 		String index = JOptionPane.showInputDialog(this, "Desired index (if none, leave empty)");
 		
 		try {//try to put a pokemon in before 
-		PokemonKey p_k = new PokemonKey(Integer.parseInt(id), Integer.parseInt(evo_set));
+		PokeKey p_k = new PokeKey(Integer.parseInt(id), Integer.parseInt(evo_set));
 		Pokemon p = new Pokemon(name, Integer.parseInt(hp), type);
 		Entry p_e = new Entry(p_k, p);
 		
@@ -149,7 +157,7 @@ public class PokePanel extends JPanel {
 			display.append("Your Pokemon was added and no Pokemon was removed.");
 		}
 		else
-			display.append("Removed Pokemon: " + removed);
+			display.append("Removed Pokemon: " + removed + " | Added Pokemon: " + p_e);
 		
 		}catch (NumberFormatException ex) {
 			display.append("Invalid information. Please enter integers for the Pokemon's parameters. \n");

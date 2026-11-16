@@ -46,7 +46,7 @@ public class CustomHashMap {
 			return null;
 		}
 		Pokemon output = null;
-		if (pokedex[index] == null) {
+		if (pokedex[index] == null) {//if there isn't a pokemon in the desired slot
 			pokedex[index] = new Node(e);
 			size++;// increment size since we aren't replacing a Pokemon
 		} else {
@@ -60,6 +60,9 @@ public class CustomHashMap {
 				runner.setNext(new Node(e));
 				size++;// increment size since we aren't replacing a Pokemon
 				//don't get anything so it will output null
+				
+				//how will i display the collision in the panel? do I create a public function in PokePanel that just displays whatever text we want? or do we get a getter for display?
+				PokePanel.getDisplay().append(e + "\n");;
 			}
 			// replace the current node with this one if the key is the same
 			else {
@@ -100,7 +103,7 @@ public class CustomHashMap {
 		return output;
 	}
 
-	public Pokemon get(PokemonKey k) {
+	public Pokemon get(PokeKey k) {
 		if (k == null)
 			return null;
 		int index = Math.abs(k.hashCode() % pokedex.length);// index of where it should be
@@ -116,7 +119,7 @@ public class CustomHashMap {
 
 	}
 
-	public Pokemon remove(PokemonKey k) {
+	public Pokemon remove(PokeKey k) {
 		if (k == null)
 			return null;
 		int index = Math.abs(k.hashCode() % pokedex.length);// index of where it should be

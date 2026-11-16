@@ -2,17 +2,17 @@ package HashMapLab;
 
 
 public class Entry {//pokemon key, pokemon
-	private PokemonKey key;
+	private PokeKey key;
 	private Pokemon value;
 
 	//Constructor
-	public Entry(PokemonKey k, Pokemon v) {
+	public Entry(PokeKey k, Pokemon v) {
 		key = k;
 		value = v;
 	}
 
 	//Getters
-	public PokemonKey getKey() {
+	public PokeKey getKey() {
 		return key;
 	}
 
@@ -23,7 +23,7 @@ public class Entry {//pokemon key, pokemon
 	//toString
 	@Override
 	public String toString() {
-		return "Entry [key=" + key + ", value=" + value + "]";
+		return "ID: " + key.getId() + " | Pokemon: " + value + " | Evo Set: " + key.getEvo_set();
 	}
 
 	

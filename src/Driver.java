@@ -19,7 +19,7 @@ public class Driver {
 		CustomHashMap pokedex = new CustomHashMap(100);
 		
 		Pokemon bulb = new Pokemon("bulbasaur",45,"{grass,poison}");
-		PokemonKey bulb_k = new PokemonKey(1,1);
+		PokeKey bulb_k = new PokeKey(1,1);
 		Entry bulb_e = new Entry(bulb_k, bulb);
 		pokedex.put(0, bulb_e);
 		System.out.println(pokedex.getPokedex());
