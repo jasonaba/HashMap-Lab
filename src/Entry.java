@@ -1,3 +1,5 @@
+package HashMapLab;
+
 
 public class Entry {//pokemon key, pokemon
 	private PokemonKey key;

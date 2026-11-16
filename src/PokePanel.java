@@ -1,3 +1,5 @@
+package HashMapLab;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -6,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.swing.*;
@@ -41,6 +42,7 @@ public class PokePanel extends JPanel {
 
 		}));
 		buttons.add(makeButton("Get Pokemon", e->getPokemon()));
+		buttons.add(makeButton("Put Pokemon", e->putPokemon()));
 		this.add(buttons, BorderLayout.EAST);
 	}
 
@@ -118,5 +120,43 @@ public class PokePanel extends JPanel {
 			 else
 				 display.append("Pokemon not found.\n");
 		 }
+	}
+	
+	public void putPokemon() {
+		//Text Panel
+		String name = JOptionPane.showInputDialog(this, "Pokemon Name");
+		String hp = JOptionPane.showInputDialog(this, "Pokemon HP");
+		String type = JOptionPane.showInputDialog(this, "Pokemon Type (format: \"{type, type, type, etc}\"");
+		String id = JOptionPane.showInputDialog(this, "Pokemon ID");
+		String evo_set = JOptionPane.showInputDialog(this, "Pokemon Evolution Set");
+		String index = JOptionPane.showInputDialog(this, "Desired index (if none, leave empty)");
+		
+		try {//try to put a pokemon in before 
+		PokemonKey p_k = new PokemonKey(Integer.parseInt(id), Integer.parseInt(evo_set));
+		Pokemon p = new Pokemon(name, Integer.parseInt(hp), type);
+		Entry p_e = new Entry(p_k, p);
+		
+		Pokemon removed = null;
+		
+		if(index.trim().isEmpty()) {
+			removed = entries.put(p_e);
+		}
+		else {
+			 removed = entries.put(Integer.parseInt(index), p_e);
+		}
+		
+		if(removed==null) {
+			display.append("Your Pokemon was added and no Pokemon was removed.");
+		}
+		else
+			display.append("Removed Pokemon: " + removed);
+		
+		}catch (NumberFormatException ex) {
+			display.append("Invalid information. Please enter integers for the Pokemon's parameters. \n");
+			return;
+		}
+		
+		
+		
 	}
 }

@@ -1,3 +1,5 @@
+package HashMapLab;
+
 
 public class CustomHashMap {
 	private Node[] pokedex;// the list that pokemon are being held in
@@ -43,18 +45,29 @@ public class CustomHashMap {
 		if (e == null) {// should we not accept them putting a null pokemon into the pokedex?
 			return null;
 		}
-		// init variables that will be used
-		Pokemon temp = null;
-		Node temp_next = null;
-		if (pokedex[index] != null) {
-			temp = pokedex[index].getData().getValue();// We only want to return the value, not the entire entry
-			temp_next = pokedex[index].getNext();// to not lose the data the one we are removing points to
-		} else
-			size++;// increment size if we aren't replacing a Pokemon
-		pokedex[index] = new Node(e);// puts a new node at that index in pokedex
-		pokedex[index].setNext(temp_next);// order of rest of data stays consistent while head of linked list is swapped
-
-		return temp;// return the value, not the entry
+		Pokemon output = null;
+		if (pokedex[index] == null) {
+			pokedex[index] = new Node(e);
+			size++;// increment size since we aren't replacing a Pokemon
+		} else {
+			Node runner = pokedex[index];
+			while (runner.getNext() != null && !runner.getData().getKey().equals(e.getKey())) {
+				// traverse linked list of nodes until we can place this node at the end or if
+				// we find the same key
+				runner = runner.getNext();
+			}
+			if (!runner.getData().getKey().equals(e.getKey())) {// if we didn't land on an entry with the same key as e
+				runner.setNext(new Node(e));
+				size++;// increment size since we aren't replacing a Pokemon
+				//don't get anything so it will output null
+			}
+			// replace the current node with this one if the key is the same
+			else {
+				output = runner.getData().getValue();//get the pokemon we replaced
+				runner.setData(e);// we don't increment size because we replaced it
+			}
+		}
+		return output;
 	}
 
 	public Pokemon put(Entry e) {
@@ -65,7 +78,7 @@ public class CustomHashMap {
 		int index = Math.abs(e.getKey().hashCode() % pokedex.length);
 		if (pokedex[index] == null) {
 			pokedex[index] = new Node(e);
-			size++;// increment size if we aren't replacing a Pokemon
+			size++;// increment size s we aren't replacing a Pokemon
 		} else {
 			Node runner = pokedex[index];
 			while (runner.getNext() != null && !runner.getData().getKey().equals(e.getKey())) {
@@ -75,7 +88,7 @@ public class CustomHashMap {
 			}
 			if (!runner.getData().getKey().equals(e.getKey())) {// if we didn't land on an entry with the same key as e
 				runner.setNext(new Node(e));
-				size++;// increment size if we aren't replacing a Pokemon
+				size++;// increment size since we aren't replacing a Pokemon
 				//don't get anything so it will output null
 			}
 			// replace the current node with this one if the key is the same
