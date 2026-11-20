@@ -1,6 +1,5 @@
 package HashMapLab;
 
-
 public class Node {
 
 	private Entry data;

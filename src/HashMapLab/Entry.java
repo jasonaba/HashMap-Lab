@@ -23,7 +23,7 @@ public class Entry {//pokemon key, pokemon
 	//toString
 	@Override
 	public String toString() {
-		return "ID: " + key.getId() + " | Pokemon: " + value + " | Evo Set: " + key.getEvo_set();
+		return key.toString() + " | " + value.toString();
 	}
 
 	
